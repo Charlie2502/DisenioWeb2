@@ -6,7 +6,7 @@ export const Menu = () => {
 
   return(
     <>
-
+      /* NAVBAR */
       <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid" style={{padding:10}}>
           <a class="navbar-brand" style={{paddingLeft:20}} href="#">HURRY</a>
@@ -46,9 +46,6 @@ export const Menu = () => {
               <li class="nav-item" style={{paddingLeft:20}}>
                 <a class="nav-link" href="#">Mi Perfil</a>
               </li>
-              <li class="nav-item" style={{paddingLeft:20}}>
-                <a class="nav-link" href="#">About</a>
-              </li>
             </ul>
             <form class="d-flex"style={{paddingRight:20}}>
               <input class="form-control me-sm-2" type="search" placeholder="Search"/>
@@ -58,6 +55,7 @@ export const Menu = () => {
         </div>
       </nav>
 
+      /* Image Carrousel */
       <div 
         className='d-flex justify-content-center align-items-center'
       >
@@ -72,6 +70,12 @@ export const Menu = () => {
             <img src="https://www.ilen.edu.pe/wp-content/uploads/2021/11/354684565.jpg" alt="" style={{height:650, width:1150}}/>
           </Carousel.Item>
         </Carousel>
+      </div>
+
+      /* About Us */
+
+      <div id='about'>
+
       </div>
 
       <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a' }}>
