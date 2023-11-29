@@ -6,7 +6,7 @@ export const Menu = () => {
 
   return(
     <>
-      /* NAVBAR */
+
       <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid" style={{padding:10}}>
           <a class="navbar-brand" style={{paddingLeft:20}} href="#">HURRY</a>
@@ -55,7 +55,7 @@ export const Menu = () => {
         </div>
       </nav>
 
-      /* Image Carrousel */
+
       <div 
         className='d-flex justify-content-center align-items-center'
       >
@@ -72,17 +72,23 @@ export const Menu = () => {
         </Carousel>
       </div>
 
-      /* About Us */
-
-      <div id='about'>
-        <div class="card border-light mb-3" style="max-width: 20rem;">
-          <div class="card-header">Header</div>
+      <div className='d-flex justify-content-center align-items-center'>
+        <div class="card text-white bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
+          <div class="card-header">Sobre Nosotros</div>
           <div class="card-body">
-            <h4 class="card-title">Light card title</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h4 class="card-title">Lorem ipsum dolor sit amet.</h4>
+            <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
+          </div>
+        </div>
+        <div class="card text-white bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
+          <div class="card-header">Sobre Nosotros</div>
+          <div class="card-body">
+            <h4 class="card-title">Lorem ipsum dolor sit amet.</h4>
+            <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
           </div>
         </div>
       </div>
+      
 
       <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a' }}>
         <MDBContainer className='p-4'></MDBContainer>
