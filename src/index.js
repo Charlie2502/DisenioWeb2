@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Menu } from './components/menu';
+import { Usuarios } from './components/usuarios';
 import Stores from './components/stores';
 
 import 'bootswatch/dist/minty/bootstrap.css'

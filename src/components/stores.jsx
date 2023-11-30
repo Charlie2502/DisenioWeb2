@@ -3,6 +3,7 @@ import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
 import {walmart} from '../images/walmart.png';
 import {vindi} from '../images/vindi.png';
 import {peri} from '../images/peri.png';
+import { auth } from "../config/firebase-config";
 
 
 
@@ -10,6 +11,7 @@ export const Stores = () => {
 
   return(
     <>
+        {/* NAVBAR */}
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
@@ -19,28 +21,11 @@ export const Stores = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarColor02">
                         <ul className="navbar-nav me-auto">
-                        <li className="nav-item dropdown" style={{paddingLeft:20}}>
-                            <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
-                            <div className="dropdown-menu">
-                            <a className="dropdown-item" href="#">Añadir Tienda</a>
-                            <a className="dropdown-item" href="#">Modificar Tiendas</a>
-                            <a className="dropdown-item" href="#">Pedidos</a>
-                            </div>
+                        <li className="nav-item" style={{paddingLeft:20}}>
+                            <a className="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
                         </li>
-                        <li className="nav-item dropdown" style={{paddingLeft:20}}>
-                            <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventario</a>
-                            <div className="dropdown-menu">
-                            <a className="dropdown-item" href="#">Añadir Producto</a>
-                            <a className="dropdown-item" href="#">Modificar Producto</a>
-                            </div>
-                        </li>
-                        <li className="nav-item dropdown" style={{paddingLeft:20}}>
-                            <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pedidos</a>
-                            <div className="dropdown-menu">
-                            <a className="dropdown-item" href="#">Añadir Envio</a>
-                            <a className="dropdown-item" href="#">Modificar Envio</a>
-                            <a className="dropdown-item" href="#">Historial de Pedidos</a>
-                            </div>
+                        <li className="nav-item" style={{paddingLeft:20}}>
+                            <a className="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Transacciones</a>
                         </li>
                         <li className="nav-item" style={{paddingLeft:20}}>
                             <a className="nav-link" href="#">Usuarios</a>
@@ -53,39 +38,44 @@ export const Stores = () => {
                     </div>
                 </div>
             </nav>
-            
-            <div className='d-flex justify-content-center align-items-center'>
-                <div className="card text-white bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
+            {/* INFO CARDS */}
+            <div className='d-flex justify-content-center align-items-center' style={{maxHeight: '75%'}}>
+                {/* INFO CARD 1 */}
+                <div className="card text-black bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
                     <div className="card-header">
-                        <img src={'peri'} alt="" style={{height:'20px', width:'20px'}}/>
+                        <img src={'vindi'} alt="" style={{height:'20px', width:'20px'}}/>
                     </div>
                     <div className="card-body">
                         <h4 className="card-title">Perimercados</h4>
                         <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
+                        <button class="btn btn-light" type="button" style={{backgroundColor: 'white'}}>Manage</button>
                     </div>
                 </div>
-                <div className="card text-white bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
+                {/* INFO CARD 2 */}
+                <div className="card text-black bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
                     <div className="card-header">
-                        <img src="walmart" alt="" style={{height:'20px', width:'20px'}}/>
+                        <img src={'vindi'} alt="" style={{height:'20px', width:'20px'}}/>
                     </div>
                     <div className="card-body">
                         <h4 className="card-title">Walmart</h4>
                         <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
+                        <button class="btn btn-light" type="button" style={{backgroundColor: 'white'}}>Manage</button>
                     </div>
                 </div>
-                <div className="card text-white bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
+                {/* INFO CARD 3 */}
+                <div className="card text-black bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
                     <div className="card-header">
                         <img src={'vindi'} alt="" style={{height:'20px', width:'20px'}}/>
                     </div>
                     <div className="card-body">
                         <h4 className="card-title">Vindi</h4>
                         <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
+                        <button class="btn btn-light" type="button" style={{backgroundColor: 'white'}}>Manage</button>
                     </div>
                 </div>
-                
             </div>
         
-
+            {/* FOOTER */}
             <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right:0, bottom:0 }}>
                 <MDBContainer className='p-4'></MDBContainer>
                 <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
