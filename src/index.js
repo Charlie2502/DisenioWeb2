@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Usuarios } from './components/usuarios';
+import PaymentForm, {} from './components/usuarios';
 import Stores from './components/stores';
+import { Stores_Manage } from './components/stores_manage';
 
 import 'bootswatch/dist/minty/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,7 +11,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Stores />
+    <PaymentForm />
   </React.StrictMode>
 );
 

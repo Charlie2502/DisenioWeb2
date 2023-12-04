@@ -15,7 +15,7 @@ export const Stores = () => {
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
-                    <a className="navbar-brand" style={{paddingLeft:20}} href="#">HURRY</a>
+                    <a className="navbar-brand" style={{paddingLeft:20}} href="#">PERRA DE MIERDA</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -39,7 +39,7 @@ export const Stores = () => {
                 </div>
             </nav>
             {/* INFO CARDS */}
-            <div className='d-flex justify-content-center align-items-center' style={{maxHeight: '75%'}}>
+            <div className='d-block justify-content-center align-items-center' style={{maxHeight: '100%', maxWidth:'75%' ,border: '2px solid'}}>
                 {/* INFO CARD 1 */}
                 <div className="card text-black bg-primary mb-3" style={{maxWidth: "20rem", margin: "30px 45px", alignItems: "center"}}>
                     <div className="card-header">

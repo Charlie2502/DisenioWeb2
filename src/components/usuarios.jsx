@@ -1,38 +1,100 @@
-export const Usuarios = () => {
-
-    return(
-        <>
-
-            {/* NAVBAR */}
-            <div style={{paddingBottom: '60px'}}>
-                <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-                    <div className="container-fluid" style={{padding:10}}>
-                        <a className="navbar-brand" style={{paddingLeft:20}} href="#">HURRY</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarColor02">
-                            <ul className="navbar-nav me-auto">
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
-                            </li>
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Transacciones</a>
-                            </li>
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href="#">Usuarios</a>
-                            </li>
-                            </ul>
-                            <form className="d-flex"style={{paddingRight:20}}>
-                            <input className="form-control me-sm-2" type="search" placeholder="Search"/>
-                            <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-
-        </>
-    )
-
-}
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import * as cardValidator from 'card-validator';
+ 
+const PaymentForm = () => {
+  const [cardHolderName, setCardHolderName] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvc, setCvc] = useState('');
+ 
+  const handlePaymentSubmit = (e) => {
+    e.preventDefault();
+ 
+    // Validar que no haya campos en blanco
+    if (!cardHolderName || !cardNumber || !expiryDate || !cvc) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Campos Incompletos',
+        text: 'Por favor, completa todos los campos del formulario.',
+      });
+      return;
+    }
+ 
+    // Validar número de tarjeta con card-validator
+    const cardNumberValidation = cardValidator.number(cardNumber);
+    if (!cardNumberValidation.isValid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Número de Tarjeta Inválido',
+        text: 'Por favor, ingresa un número de tarjeta válido.',
+      });
+      return;
+    }
+ 
+    // Validar fecha de vencimiento
+    const expiryDateValidation = cardValidator.expirationDate(expiryDate);
+    if (!expiryDateValidation.isValid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Fecha de Vencimiento Inválida',
+        text: 'Por favor, ingresa una fecha de vencimiento válida.',
+      });
+      return;
+    }
+ 
+    // Aquí puedes realizar la lógica de procesamiento de pago simulado
+    Swal.fire({
+      icon: 'success',
+      title: 'Pago Exitoso',
+      text: 'El pago ha sido procesado exitosamente.',
+    });
+  };
+ 
+  return (
+<div>
+<h2>Formulario de Pago</h2>
+<form onSubmit={handlePaymentSubmit}>
+<label>
+          Nombre del Portador:
+<input
+            type="text"
+            value={cardHolderName}
+            onChange={(e) => setCardHolderName(e.target.value)}
+          />
+</label>
+<br />
+<label>
+          Numero de Tarjeta:
+<input
+            type="text"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(e.target.value)}
+          />
+</label>
+<br />
+<label>
+          Fecha de Vencimiento:
+<input
+            type="text"
+            value={expiryDate}
+            onChange={(e) => setExpiryDate(e.target.value)}
+          />
+</label>
+<br />
+<label>
+          CVC:
+<input
+            type="text"
+            value={cvc}
+            onChange={(e) => setCvc(e.target.value)}
+          />
+</label>
+<br />
+<button type="submit">Pagar</button>
+</form>
+</div>
+  );
+};
+ 
+export default PaymentForm;
