@@ -35,14 +35,14 @@ export const Stores_Manage = () => {
             </div>
             <div>
                <table >
-                    <tr >
-                        <th ></th>
-                        <th >Producto</th>
-                        <th >Descripcion</th>
-                        <th >Categoria</th>
-                        <th >Cantidad</th>
-                        <th >Precio</th>
-                        <th >Manage</th>
+                    <tr class='table-primary'>
+                        <th scope="row"></th>
+                        <th scope="row">Producto</th>
+                        <th scope="row">Descripcion</th>
+                        <th scope="row">Categoria</th>
+                        <th scope="row">Cantidad</th>
+                        <th scope="row">Precio</th>
+                        <th scope="row">Manage</th>
                     </tr>
 
                     <tr >
@@ -65,3 +65,5 @@ export const Stores_Manage = () => {
     )
 
 }
+
+export default Stores_Manage;
