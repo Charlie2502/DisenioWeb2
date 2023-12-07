@@ -1,8 +1,66 @@
 import React, { Component } from 'react'
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
+import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react';
+import { auth } from '../config/firebase-config';
 
-export class Login extends Component {
-  render() {
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
+export const Login = () => {
+
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPass, setLoginPass] = useState('');
+    
+    const [user, setUser] = useState({});
+
+
+    /* Metodos */
+    const registro = async () => {
+        try {
+            const user = await createUserWithEmailAndPassword(auth, registroEmail, registroPass);
+            Swal.fire({
+                title: "Usuario Creado!",
+                icon: "success"
+              });
+        } catch (error) {
+            Swal.fire({
+                title: "Algo salio mal",
+                text: error.message,
+                icon: "error"
+              });
+        }
+    }
+
+    const login = async () => {
+        try {
+            setUser(await signInWithEmailAndPassword(auth, loginEmail, loginPass)); 
+            Swal.fire({
+                title: "Sesion Iniciada!",
+                icon: "success"
+              });
+        } catch (error) {
+            Swal.fire({
+                title: "Algo salio mal",
+                text: error.message,
+                icon: "error"
+              });
+        }
+    }
+
+    const logout = async () => {
+        await signOut(auth);
+        Swal.fire({
+            title: "Sesion Cerrada!",
+            icon: "success"
+          });
+    }
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+    }, [user])
+
     return (
       
         <>
@@ -14,11 +72,11 @@ export class Login extends Component {
                 <form>
                     <fieldset>
                         <div class="form-group">
-                            <label for="exampleInputEmail1" class="form-label mt-4">Correo Electronico</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar correo"/>
-                            <label for="exampleInputEmail1" class="form-label mt-4">Contraseña</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar contraseña"/>
-                            <button type="button" class="btn btn-dark">Log In</button>
+                            <label class="form-label mt-4">Correo Electronico</label>
+                            <input type="email" class="form-control" value={loginEmail} placeholder="Ingresar correo" onChange={ ({target}) => setLoginEmail(target.value)}/>
+                            <label class="form-label mt-4">Contraseña</label>
+                            <input type="email" class="form-control" value={loginPass} placeholder="Ingresar contraseña" onChange={ ({target}) => setLoginPass(target.value)}/>
+                            <button type="button" class="btn btn-dark" onClick={login}>Log In</button>
                         </div>
                     </fieldset>
                 </form>
@@ -38,6 +96,5 @@ export class Login extends Component {
         
     )
   }
-}
 
 export default Login
