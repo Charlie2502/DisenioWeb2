@@ -1,11 +1,12 @@
+import { MDBContainer, MDBFooter } from 'mdb-react-ui-kit'
+import React, { Component } from 'react'
 import '../css/table.css';
 
-export const Stores_Manage = () => {
-
-    return(
-        <>
-
-            {/* NAVBAR */}
+export default class Billing extends Component {
+  render() {
+    return (
+      <>
+        {/* NAVBAR */}
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
@@ -33,37 +34,44 @@ export const Stores_Manage = () => {
                 </div>
             </nav>
         </div>
-            <div>
-               <table >
-                    <tr class='table-primary'>
-                        <th scope="row"></th>
-                        <th scope="row">Producto</th>
-                        <th scope="row">Descripcion</th>
-                        <th scope="row">Categoria</th>
-                        <th scope="row">Cantidad</th>
-                        <th scope="row">Precio</th>
-                        <th scope="row">Manage</th>
-                    </tr>
 
-                    <tr >
-                        <td >Imagen</td>
-                        <td >Cebolla</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >
-                            <button>Editar</button>
-                            <button>Eliminar</button>
-                        </td>
-                    </tr>
-               </table>         
-            </div>
-            <button>Agregar</button>
+            {/* BILLING TABLE */}
 
-        </>
+            <table class="table table-hover" id='billing-table' style={{}}>
+                <thead>
+                    <tr>
+                    <th scope="col">Bill ID</th>
+                    <th scope="col">Store ID</th>
+                    <th scope="col">Store Name</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Shipment Type</th>
+                    <th scope="col">Total Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-active">
+                    <th scope="row">9001</th>
+                    <td>01</td>
+                    <td>Perimercados</td>
+                    <td>451</td>
+                    <td>Land</td>
+                    <td>150000</td>
+                    </tr>
+                </tbody>
+                </table>
+
+
+            {/* FOOTER */}
+            <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a' }}>
+                <MDBContainer className='p-4'>Not HURRY</MDBContainer>
+                <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+                © 2023 Copyright: 
+                <a className='text-white' href='https://habbo.com/'>
+                NotHURRY.com
+                </a>      
+                </div>
+            </MDBFooter>  
+      </>
     )
-
+  }
 }
-
-export default Stores_Manage;

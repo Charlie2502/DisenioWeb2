@@ -14,3 +14,9 @@ td{
 table {
     width: 100%;
 }
+
+#billing-table{
+    max-width: 75%;
+    margin-left: 10%;
+    margin-bottom: 50px;
+}
