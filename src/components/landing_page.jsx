@@ -1,11 +1,14 @@
-import '../css/table.css';
+import React, { useState } from 'react'
+import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import Swal from 'sweetalert2';
 
-export const Stores_Manage = () => {
+export const Landing_Page = () => {
 
-    return(
-        <>
-
-            {/* NAVBAR */}
+  return (
+    <>
+        {/* NAVBAR */}
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
@@ -25,45 +28,17 @@ export const Stores_Manage = () => {
                             <a className="nav-link" href="/users_manage">Usuarios</a>
                         </li>
                         </ul>
-                        <form className="d-flex" style={{paddingRight:20}}>
-                        <input className="form-control me-sm-2" type="search" placeholder="Search"/>
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                        
+                        <button className="btn btn-primary my-2 mx-2 my-sm-0" type="submit">Log In</button>
+
+                        <button className="btn btn-secondary my-2 mx-2 my-sm-0" type="submit">Sign In</button>
+                        
                     </div>
                 </div>
             </nav>
         </div>
-            <div>
-               <table >
-                    <tr class='table-primary'>
-                        <th scope="row"></th>
-                        <th scope="row">Producto</th>
-                        <th scope="row">Descripcion</th>
-                        <th scope="row">Categoria</th>
-                        <th scope="row">Cantidad</th>
-                        <th scope="row">Precio</th>
-                        <th scope="row">Manage</th>
-                    </tr>
-
-                    <tr >
-                        <td >Imagen</td>
-                        <td >Cebolla</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >Prueba</td>
-                        <td >
-                            <button>Editar</button>
-                            <button>Eliminar</button>
-                        </td>
-                    </tr>
-               </table>         
-            </div>
-            <button>Agregar</button>
-
-        </>
-    )
-
+    </>
+  )
 }
 
-export default Stores_Manage;
+export default Landing_Page

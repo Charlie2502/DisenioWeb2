@@ -16,6 +16,9 @@ export const Login = () => {
     const [ISCorreo, setISCorreo] = useState('');
     const [ISPass, setISPass] = useState('');
 
+    const [registroEmail, setRegistroCorreo] = useState('');
+    const [registroPass, setRegistroCon] = useState('');
+
     const [user, setUser] = useState({});
 
     /* Metodos */
@@ -33,6 +36,22 @@ export const Login = () => {
                 text: error.message,
                 icon: "error"
             });
+        }
+    }
+
+    const registro = async () => {
+        try {
+            const user = await createUserWithEmailAndPassword(auth, registroEmail, registroPass);
+            Swal.fire({
+                title: "Usuario Creado!",
+                icon: "success"
+              });
+        } catch (error) {
+            Swal.fire({
+                title: "Algo salio mal",
+                text: error.message,
+                icon: "error"
+              });
         }
     }
 
@@ -57,59 +76,21 @@ export const Login = () => {
                             <label class="form-label mt-4">Correo Electronico</label>
                             <input type="email" class="form-control" value={ISCorreo} placeholder="Ingresar correo" onChange={ ({target}) => setISCorreo(target.value)}/>
                             <label class="form-label mt-4">Contraseña</label>
-                            <input type="email" class="form-control" value={ISPass} placeholder="Ingresar contraseña" onChange={ ({target}) => setISPass(target.value)}/>
+                            <input type="password" class="form-control" value={ISPass} placeholder="Ingresar contraseña" onChange={ ({target}) => setISPass(target.value)}/>
                             <button type="button" class="btn btn-dark" onClick={IS}>Log In</button>
                         </div>
                     </fieldset>
                 </form>
+
+                <div class="form-group">
+                    <label class="form-label mt-4">Correo</label>
+                    <input type="Correo" class="form-control" placeholder="Correo" value={registroEmail} onChange={ ({target}) => setRegistroCorreo(target.value)}/>
+                    <label class="form-label mt-4">Contraseña</label>
+                    <input type="Contraseña" class="form-control" placeholder="Contraseña" value={registroPass} onChange={ ({target}) => setRegistroCon(target.value)}/>
+                    <button type="button" class="btn btn-success" onClick={registro}>Registrar</button>
+                </div>
                 <p class="lead">No tiene una cuenta con nosotros? 
-                    <Popup
-                        trigger={<button className="button"> Open Modal </button>}
-                        modal
-                        nested
-                    >
-                        {close => (
-                        <div className="modal">
-                            <button className="close" onClick={close}>
-                            &times;
-                            </button>
-                            <div className="header"> Modal Title </div>
-                            <div className="content">
-                            {' '}
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
-                            Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
-                            delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
-                            <br />
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-                            commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
-                            explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
-                            </div>
-                            <div className="actions">
-                            <Popup
-                                trigger={<button className="button"> Trigger </button>}
-                                position="top center"
-                                nested
-                            >
-                                <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-                                magni omnis delectus nemo, maxime molestiae dolorem numquam
-                                mollitia, voluptate ea, accusamus excepturi deleniti ratione
-                                sapiente! Laudantium, aperiam doloribus. Odit, aut.
-                                </span>
-                            </Popup>
-                            <button
-                                className="button"
-                                onClick={() => {
-                                console.log('modal closed ');
-                                close();
-                                }}
-                            >
-                                close modal
-                            </button>
-                            </div>
-                        </div>
-                        )}
-                    </Popup>
+                    
                 </p>
             </div>
 

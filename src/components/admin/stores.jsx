@@ -1,10 +1,5 @@
 import React from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
-import {walmart} from '../images/walmart.png';
-import {vindi} from '../images/vindi.png';
-import {peri} from '../images/peri.png';
-import { auth } from "../config/firebase-config";
-
 
 
 export const Stores = () => {
@@ -22,18 +17,18 @@ export const Stores = () => {
                     <div className="collapse navbar-collapse" id="navbarColor02">
                         <ul className="navbar-nav me-auto">
                         <li className="nav-item" style={{paddingLeft:20}}>
-                            <a className="nav-link" href="/stores" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
+                           <a className="nav-link" href="/admin/stores" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
                         </li>
                         <li className="nav-item" style={{paddingLeft:20}}>
-                            <a className="nav-link" href="/billing_admin" role="button" aria-haspopup="true" aria-expanded="false">Transacciones</a>
+                            <a className="nav-link" href="/admin/billing_admin" role="button" aria-haspopup="true" aria-expanded="false">Transacciones</a>
                         </li>
                         <li className="nav-item" style={{paddingLeft:20}}>
-                            <a className="nav-link" href="/users_manage">Usuarios</a>
+                            <a className="nav-link" href="/admin/users_manage">Usuarios</a>
                         </li>
                         </ul>
                         <form className="d-flex" style={{paddingRight:20}}>
-                        <input className="form-control me-sm-2" type="search" placeholder="Search"/>
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                            <input className="form-control me-sm-2" type="search" placeholder="Search"/>
+                            <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
@@ -48,7 +43,9 @@ export const Stores = () => {
                     <div className="card-body">
                         <h4 className="card-title">Perimercados</h4>
                         <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
-                        <button class="btn btn-light" type="button" style={{backgroundColor: 'white'}}>Manage</button>
+                        <a href="/admin/stores-manage">
+                            <button class="btn btn-light" type="button" style={{backgroundColor: 'white'}}>Manage</button>
+                        </a>
                     </div>
                 </div>
                 {/* INFO CARD 2 */}
