@@ -2,15 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
 import { auth } from '../config/firebase-config';
+import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 import Swal from 'sweetalert2';
 import Popup from 'reactjs-popup';
 
-
-
-
 export const Login = () => {
+
+    let history = useNavigate();
 
     /* HOOKS */
     const [ISCorreo, setISCorreo] = useState('');
@@ -30,6 +30,12 @@ export const Login = () => {
                 title: "Sesion Iniciada!",
                 icon: "success"
             });
+            if(ISCorreo.includes('@admin.com')){
+                history('/admin/stores');
+            } else {
+                history('/buyer/stores');
+            }
+            
         } catch (error) {
             Swal.fire({
                 title: "Algo salio mal",
