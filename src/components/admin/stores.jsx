@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../config/firebase-config';
 
 
 export const Stores = () => {
+
+    const [stores, setStores] = useState([]);
+
+    const storesCollectionRef = collection(db, "Store");
+
+    /* Show Users */
+    useEffect(() => {
+
+        const getStores = async () => {
+            const data = await getDocs(storesCollectionRef);
+            setStores(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        }
+
+        getStores();
+    }, [])
 
     return (
         <>
@@ -33,18 +50,26 @@ export const Stores = () => {
                         </div>
                     </div>
                 </nav>
+            </div>
 
-                {/* INFO CARD 3 */}
-                <div className="card text-black bg-primary mb-3" style={{ maxWidth: "20rem", margin: "30px 45px", alignItems: "center" }}>
-                    <div className="card-header">
-                        <img src={'vindi'} alt="" style={{ height: '20px', width: '20px' }} />
-                    </div>
-                    <div className="card-body">
-                        <h4 className="card-title">Vindi</h4>
-                        <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, consequatur.</p>
-                        <button class="btn btn-light" type="button" style={{ backgroundColor: 'white' }}>Manage</button>
-                    </div>
-                </div>
+            <div>
+                {stores.map((store) => {
+                    return (
+                        <div className="card text-black mb-3" style={{ maxWidth: "20rem", margin: "30px 45px", alignItems: "center", backgroundColor: '#D5D8DC', fontFamily: 'sans-serif' }}>
+                            <div className="card-header">
+                                <img src={store.img} alt="" style={{ height: '50px', width: '120px' }} />
+                            </div>
+                            <div className="card-body">
+                                <h4 className="card-title">
+                                    <b>{store.name}</b>
+                                </h4>
+                                <p className="card-text">{store.served_area}</p>
+                                <p className="card-text">{store.industry}</p>
+                                <button class="btn btn-light" type="button" style={{ backgroundColor: 'white' }}>Manage</button>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
 
             {/* FOOTER */}
