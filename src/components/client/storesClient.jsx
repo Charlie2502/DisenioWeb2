@@ -10,7 +10,7 @@ export const StoresClient = () => {
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
-                    <a className="navbar-brand" style={{paddingLeft:20}} href="#">Not HURRY</a>
+                    <a className="navbar-brand" style={{paddingLeft:20}} href="#">Larry</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -76,7 +76,7 @@ export const StoresClient = () => {
                 <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                     © 2023 Copyright:
                     <a className='text-white' href='https://habbo.com/'>
-                    HURRY.com
+                    Larry.com
                     </a>      
                 </div>
             </MDBFooter>

@@ -9,7 +9,7 @@ export default class Billing extends Component {
         <div style={{paddingBottom: '60px'}}>
                 <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                     <div className="container-fluid" style={{padding:10}}>
-                        <a className="navbar-brand" style={{paddingLeft:20}} href="#">Not HURRY</a>
+                        <a className="navbar-brand" style={{paddingLeft:20}} href="#">Larry</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -62,11 +62,11 @@ export default class Billing extends Component {
 
             {/* FOOTER */}
             <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a' }}>
-                <MDBContainer className='p-4'>Not HURRY</MDBContainer>
+                <MDBContainer className='p-4'>Larry</MDBContainer>
                 <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                 © 2023 Copyright: 
                 <a className='text-white' href='https://habbo.com/'>
-                NotHURRY.com
+                NotLarry.com
                 </a>      
                 </div>
             </MDBFooter>  
