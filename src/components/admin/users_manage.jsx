@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
 import { db } from '../../config/firebase-config';
 
 export const Users_Manage = () => {
@@ -8,6 +8,7 @@ export const Users_Manage = () => {
 
     const usersCollectionRef = collection(db, "Users");
 
+    /* Show Users */
     useEffect(() => {
 
         const getUsers = async () => {
@@ -17,6 +18,14 @@ export const Users_Manage = () => {
 
         getUsers();
     }, [])
+
+    /* Modify Users */
+
+    /* Delete Users */
+    const deleteUser = async (id) => {
+        const userDoc = doc(db, "Users", id);
+        await deleteDoc(userDoc);
+    }
 
   return (
     <>
@@ -45,22 +54,11 @@ export const Users_Manage = () => {
             </nav>
         </div>
 
-        <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2"/>
-                <button class="btn btn-primary" type="button" id="button-addon2">Buscar</button>
-                <div data-lastpass-icon-root="true" style={{position: 'relative !important', height: '0px !important', width: '0px !important', float: 'left !important'}}></div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios1" value="userid" checked=""/>
-                <label class="form-check-label" for="optionsRadios1">
-                User ID
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="username"/>
-                <label class="form-check-label" for="optionsRadios2">
-                UserName
-                </label>
-            </div>
+        <div class="input-group mb-3" style={{width: '50%', marginLeft: 'auto', marginRight: 'auto'}}>
+            <input type="text" class="form-control" placeholder="ID - Nombre - Rol" aria-describedby="button-addon2"/>
+            <button class="btn btn-primary" type="button" id="button-addon2">Buscar</button>
+            
+            <button type="button" class="btn btn-outline-secondary" style={{marginLeft: '20px'}}>Añadir Usuario</button>
         </div>
         
 
@@ -68,14 +66,20 @@ export const Users_Manage = () => {
             {users.map((user) => {
                 return(
                     <div>
-                        <table class="table table-hover">
+                        <table class="table table-hover" style={{width: '75%', marginLeft: 'auto', marginRight: 'auto'}}>
                             <tbody>
                                 <tr class="table-active">
-                                <th scope="row">{user.id}</th>
-                                <td>{user.name}</td>
-                                <td>{user.age}</td>
-                                <td>{user.cellphone}</td>
-                                <td>{user.rol}</td>
+                                <th scope="row" style={{width:'20%', textAlign: 'center'}}>{user.id}</th>
+                                <td style={{textAlign: 'center'}}>{user.name}</td>
+                                <td style={{textAlign: 'center'}}>{user.cellphone}</td>
+                                <td style={{textAlign: 'center'}}>{user.email}</td>
+                                <td style={{textAlign: 'center'}}>{user.rol}</td>
+                                <td style={{textAlign: 'center'}}>
+                                    <button type="button" class="btn btn-warning">Modificar</button>
+                                </td>
+                                <td style={{textAlign: 'center'}}>
+                                    <button type="button" class="btn btn-danger" onClick={() => {deleteUser(user.id)}}>Eliminar</button>
+                                </td>
                                 </tr>
                             </tbody>
                             
