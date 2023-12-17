@@ -3,6 +3,7 @@ import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase-config';
+import Stores_Manage from './stores_manage';
 
 
 export const Stores = () => {
@@ -25,11 +26,13 @@ export const Stores = () => {
     /* Manage Store Link */
     let history = useNavigate();
 
-    const manage = () => {
+    const manage = (name) => () => {
         
+        const storeName = name;
+        <Stores_Manage name={storeName}/>
+        history('/admin/stores-manage');
+
     }
-
-
 
     return (
         <>
@@ -59,9 +62,10 @@ export const Stores = () => {
             </div>
 
             <div>
-                {stores.map((store) => {
+                {stores.map((store, index) => {
+
                     return (
-                        <div className="card text-black mb-3" style={{ maxWidth: "20rem", margin: "30px 45px", backgroundColor: '#D5D8DC', fontFamily: 'sans-serif' }}>
+                        <div key={index} className="card text-black mb-3" style={{ maxWidth: "20rem", margin: "30px 45px", backgroundColor: '#D5D8DC', fontFamily: 'sans-serif' }}>
                             <div className="card-header">
                                 <img src={store.img} alt="" style={{ height: '50px', width: '120px' }} />
                             </div>
@@ -71,7 +75,7 @@ export const Stores = () => {
                                 </h4>
                                 <p className="card-text">{store.served_area}</p>
                                 <p className="card-text">{store.industry}</p>
-                                <button class="btn btn-info" type="button">Administrar</button>
+                                <button className="btn btn-info" type="button" onClick={manage(store.name)}>Administrar</button>
                             </div>
                         </div>
                     );
