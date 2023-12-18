@@ -20,16 +20,16 @@ export const StoresClient = () => {
                             <a className="nav-link" href="/stores" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
                         </li>
                         <li className="nav-item" style={{paddingLeft:20}}>
-                            <a className="nav-link" href="/billing_admin" role="button" aria-haspopup="true" aria-expanded="false">Transacciones</a>
+                            <a className="nav-link" href="/billing_admin" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
                         </li>
                         <li className="nav-item" style={{paddingLeft:20}}>
-                            <a className="nav-link" href="/users_manage">Usuarios</a>
+                            <a className="nav-link" href="/users_manage">Mi Perfil</a>
                         </li>
                         </ul>
-                        <form className="d-flex" style={{paddingRight:20}}>
-                        <input className="form-control me-sm-2" type="search" placeholder="Search"/>
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                        <ul>
+                            <li className="nav-item" style={{paddingRight:20}}></li>
+                        </ul>
+
                     </div>
                 </div>
             </nav>

@@ -10,7 +10,7 @@ export const StoresClient = () => {
         <div style={{paddingBottom: '60px'}}>
             <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid" style={{padding:10}}>
-                    <a className="navbar-brand" style={{paddingLeft:20}} href="#">Larry</a>
+                    {/*<a className="navbar-brand" style={{paddingLeft:20}} href="#">Larry</a>*/}
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -35,8 +35,8 @@ export const StoresClient = () => {
                     </div>
                 </div>
             </nav>
-             {/* FOOTER */}
-             <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right:0, bottom:0 }}>
+            {/* FOOTER */}
+            <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right:0, bottom:0 }}>
                 <MDBContainer className='p-4'></MDBContainer>
                 <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                     © 2023 Copyright:
@@ -53,4 +53,4 @@ export const StoresClient = () => {
 
 }
 
-export default profileBuyer;
+export default StoresClient;
