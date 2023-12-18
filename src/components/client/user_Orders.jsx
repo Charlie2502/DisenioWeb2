@@ -35,6 +35,31 @@ export const StoresClient = () => {
                     </div>
                 </div>
             </nav>
+
+            <h3>Mis Pedidos:</h3>
+
+            <div>
+                <table className="table table-hover" id="prod_table">
+                    <thead>
+                        <tr>
+                            
+                            <th scope="col">Tienda</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="table-active">
+                            <td>Column content</td>
+                            <td>Column content</td>
+                            <td>Column content</td>
+                            <td>Column content</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             {/* FOOTER */}
             <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right:0, bottom:0 }}>
                 <MDBContainer className='p-4'></MDBContainer>
