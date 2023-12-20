@@ -5,7 +5,10 @@ import '../css/table.css'
 
 export const Stores_Manage = (props) => {
 
-    console.log(props.name);
+    const state = props.location;
+    const name = state;
+
+    console.log(name);
 
     return (
         <>
@@ -38,7 +41,7 @@ export const Stores_Manage = (props) => {
                 </nav>
             </div>
 
-            <h3>Store Name: {props.name}</h3>
+            
 
             <div>
                 <table className="table table-hover" id="prod_table">
