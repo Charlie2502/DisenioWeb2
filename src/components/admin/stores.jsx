@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase-config';
 import Stores_Manage from './stores_manage';
 
+import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 
 export const Stores = () => {
 
     const [stores, setStores] = useState([]);
+    const [storeName, setStoreName] = useState("");
+    const [products, setProducts] = useState([]);
 
+    const productsCollectionRef = collection(db, "Store_Catalog");
     const storesCollectionRef = collection(db, "Store");
 
-    /* Show Users */
+    /* Show Stores */
     useEffect(() => {
 
         const getStores = async () => {
@@ -23,16 +29,19 @@ export const Stores = () => {
         getStores();
     }, [])
 
-    /* Manage Store Link */
-    let history = useNavigate();
+    /* Show Products */
+    useEffect(() => {
 
-    const manage = (name) => () => {
-        
-        const storeName = name;
-        <Stores_Manage name={storeName}/>
-        history('/admin/stores-manage');
+        const getProducts = async () => {
+            const data = await getDocs(storesCollectionRef);
+            setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        }
 
-    }
+        getProducts();
+    }, [])
+
+    /* Manage Store */
+    
 
     return (
         <>
@@ -75,11 +84,47 @@ export const Stores = () => {
                                 </h4>
                                 <p className="card-text">{store.served_area}</p>
                                 <p className="card-text">{store.industry}</p>
-                                <button className="btn btn-info" type="button" onClick={manage(store.name)}>Administrar</button>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setStoreName(store.name) }}>
+                                    Administrar
+                                </button>
+
+                                {/* <button className="btn btn-info" type="button" onClick={() => {manage(store.name)}}>Administrar</button> */}
                             </div>
+
                         </div>
+
                     );
                 })}
+            </div>
+
+
+
+            {/* Store Catalog Modal */}
+            <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{storeName}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {products.map((product) => {
+
+                                return (
+                                    <div>
+                                        
+                                    </div>
+                                )
+
+                            })}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* FOOTER */}
