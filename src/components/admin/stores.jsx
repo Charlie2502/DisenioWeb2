@@ -33,7 +33,7 @@ export const Stores = () => {
     useEffect(() => {
 
         const getProducts = async () => {
-            const data = await getDocs(storesCollectionRef);
+            const data = await getDocs(productsCollectionRef);
             setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         }
 
@@ -111,9 +111,17 @@ export const Stores = () => {
                         <div class="modal-body">
                             {products.map((product) => {
 
+                                console.log(product.productName,
+                                product.category,
+                                product.productValue,
+                                product.availability);
+
                                 return (
                                     <div>
-                                        
+                                        <p>{product.productName}</p>
+                                        <p>{product.category}</p>
+                                        <p>{product.productValue}</p>
+                                        <p>{product.availability}</p>
                                     </div>
                                 )
 
