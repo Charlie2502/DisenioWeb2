@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from "react-router-dom";
-import { addDoc, collection, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase-config';
 import Stores_Manage from './stores_manage';
 import { Firestore } from 'firebase/firestore';
@@ -10,7 +10,9 @@ import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Swal from 'sweetalert2';
-import { Formik, useFormik } from 'formik';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import btnCellRenderer from './btnCellRenderer';
 
 export const Stores = () => {
 
@@ -54,16 +56,17 @@ export const Stores = () => {
 
     const addStore = async () => {
         try {
-            const store = await addDoc(storesCollectionRef, 
-                { 
-                    name: newStoreName, 
-                    industry: newStoreIndustry, 
-                    served_area: newStoreServedArea, 
-                    img: newStoreIMG 
+            const store = await addDoc(storesCollectionRef,
+                {
+                    name: newStoreName,
+                    industry: newStoreIndustry,
+                    served_area: newStoreServedArea,
+                    img: newStoreIMG,
+                    created_At: serverTimestamp()
                 })
-            
+
             Swal.fire({
-                title: "Usuario Creado!",
+                title: "Tienda Añadida!",
                 icon: "success"
             });
         } catch (error) {
@@ -74,75 +77,6 @@ export const Stores = () => {
             });
         }
     }
-
-    /*
-    const addStore = useFormik({
-        initialValues: {
-            name: String(''),
-            industry: String(''),
-            served_area: String(''),
-            img: String(''),
-            created: serverTimestamp()
-        },
-        onSubmit: values => {
-            //alert(JSON.stringify(values, null, 2))
-            try {
-
-
-                const storeAddCollectionRef = collection(db, "Store",
-                    {
-                        name: values.name,
-                        industry: values.industry,
-                        served_area: values.served_area,
-                        img: values.img,
-                        created_at: serverTimestamp()
-                    });
-
-                console.log(storeAddCollectionRef);
-
-
-                Swal.fire({
-                    title: "Usuario Creado!",
-                    icon: "success"
-                });
-            } catch (error) {
-                Swal.fire({
-                    title: "Algo salio mal",
-                    text: error.message,
-                    icon: "error"
-                });
-            }
-        }
-    })
-    */
-    /*try {
-
-
-        const storeAddCollectionRef = collection(db, "Store",
-            {
-                name: newStoreName,
-                industry: newStoreIndustry,
-                served_area: newStoreServedArea,
-                img: newStoreIMG,
-                created_at: serverTimestamp()
-            });
-
-        console.log(storeAddCollectionRef);
-
-
-        Swal.fire({
-            title: "Usuario Creado!",
-            icon: "success"
-        });
-    } catch (error) {
-        Swal.fire({
-            title: "Algo salio mal",
-            text: error.message,
-            icon: "error"
-        });
-    }*/
-
-
 
     return (
         <>
@@ -172,11 +106,6 @@ export const Stores = () => {
             </div>
 
             <div>
-                <div style={{ marginLeft: "45px" }}>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStoreModal">
-                        Agregar Tienda
-                    </button>
-                </div>
                 {stores.map((store, index) => {
 
                     return (
@@ -202,13 +131,18 @@ export const Stores = () => {
 
                     );
                 })}
+                <div style={{ marginLeft: "45px" }}>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStoreModal">
+                        Agregar Tienda
+                    </button>
+                </div>
             </div>
 
 
 
             {/* Store Catalog Modal */}
             <div class="modal fade" id="manageModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">{storeName}</h5>
@@ -217,19 +151,59 @@ export const Stores = () => {
                         <div class="modal-body">
                             {products.map((product) => {
 
-                                console.log(product.productName,
-                                    product.category,
-                                    product.productValue,
-                                    product.availability);
+                                const gridOptions = {
+                                    rowData: [{
+                                        producto: product.productName,
+                                        disponibilidad: product.availability,
+                                        categoria: product.category,
+                                        precio: product.productValue,
+    
+                                    }],
+                                    colmunDefs: [
+                                        { field: "categoria", type: 'editable' },
+                                        { field: "producto", type: 'editable' },
+                                        { field: "disponibilidad", type: 'editableNum' },
+                                        { field: "precio", type: 'editableNum' },
+                                        {
+                                            field: 'acciones',
+                                            cellRenderer: btnCellRenderer,
+                                            cellRendererParams: {
+                                              clicked: function() {
+                                                const deleteDocRef = doc(db, 'Store_Catalog', product.id)
+                                                deleteDoc(deleteDocRef);
+                                                toast("Producto Eliminado");
+                                              },
+                                            },
+                                            
+                                          }
+                                        
+                                    ],
+                                    columnTypes: {
+                                        editable: {
+                                            editable: true
+                                        },
+                                        editableNum: {
+                                            editable: true,
+                                            valueParser: 'Number(newValue)',
+                                            filter: 'agNumberColumnFilter',
+                                        }
+                                    }
+                                    
+                                }
 
-                                return (
-                                    <div>
-                                        <p>{product.productName}</p>
-                                        <p>{product.category}</p>
-                                        <p>{product.productValue}</p>
-                                        <p>{product.availability}</p>
-                                    </div>
-                                )
+                                if(storeName === product.storeName) {
+                                    return (
+                                        <div
+                                            className={
+                                                "ag-theme-quartz-dark"
+                                            }
+                                            style={{ width: '100%', height: '250px' }}
+                                        >
+                                            <AgGridReact rowData={gridOptions.rowData} columnDefs={gridOptions.colmunDefs} />
+                                        </div>
+                                    )
+                                }
+                                
 
                             })}
                         </div>
@@ -250,47 +224,47 @@ export const Stores = () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            
-                                <input type="text"
-                                    value={newStoreName}
-                                    class="form-control"
-                                    placeholder="Nombre de la Tienda"
-                                    id="name"
-                                    required
-                                    onChange={ (event) => setNewStoreName(event.target.value) }
-                                />
-                                <input
-                                    type="text"
-                                    value={newStoreIndustry}
-                                    class="form-control"
-                                    placeholder="Forma de Ventas"
-                                    id="industry"
-                                    required
-                                    onChange={ (event) => setNewStoreIndustry(event.target.value) }
-                                />
-                                <input
-                                    type="text"
-                                    value={newStoreServedArea}
-                                    class="form-control"
-                                    placeholder="Localidad"
-                                    id="served_area"
-                                    required
-                                    onChange={ (event) => setNewServedArea(event.target.value) }
-                                />
-                                <input
-                                    type="text"
-                                    value={newStoreIMG}
-                                    class="form-control"
-                                    placeholder='URL Imagen'
-                                    id="img"
-                                    required
-                                    onChange={ (event) => setNewStoreIMG(event.target.value) }
-                                />
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" onClick={() => {addStore()}}>Agregar Tienda</button>
-                                </div>
-                            
+
+                            <input type="text"
+                                value={newStoreName}
+                                class="form-control"
+                                placeholder="Nombre de la Tienda"
+                                id="name"
+                                required
+                                onChange={(event) => setNewStoreName(event.target.value)}
+                            />
+                            <input
+                                type="text"
+                                value={newStoreIndustry}
+                                class="form-control"
+                                placeholder="Forma de Ventas"
+                                id="industry"
+                                required
+                                onChange={(event) => setNewStoreIndustry(event.target.value)}
+                            />
+                            <input
+                                type="text"
+                                value={newStoreServedArea}
+                                class="form-control"
+                                placeholder="Localidad"
+                                id="served_area"
+                                required
+                                onChange={(event) => setNewServedArea(event.target.value)}
+                            />
+                            <input
+                                type="text"
+                                value={newStoreIMG}
+                                class="form-control"
+                                placeholder='URL Imagen'
+                                id="img"
+                                required
+                                onChange={(event) => setNewStoreIMG(event.target.value)}
+                            />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onClick={() => { addStore() }}>Agregar Tienda</button>
+                            </div>
+
                         </div>
 
                     </div>
@@ -308,10 +282,8 @@ export const Stores = () => {
                 </div>
             </MDBFooter>
 
-
         </>
     )
-
 
 }
 
