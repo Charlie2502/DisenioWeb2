@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { addDoc, collection, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase-config';
 import Stores_Manage from './stores_manage';
+import { Firestore } from 'firebase/firestore';
 
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
@@ -50,6 +51,31 @@ export const Stores = () => {
     }, [])
 
     /* Add Stores */
+
+    const addStore = async () => {
+        try {
+            const store = await addDoc(storesCollectionRef, 
+                { 
+                    name: newStoreName, 
+                    industry: newStoreIndustry, 
+                    served_area: newStoreServedArea, 
+                    img: newStoreIMG 
+                })
+            
+            Swal.fire({
+                title: "Usuario Creado!",
+                icon: "success"
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Algo salio mal",
+                text: error.message,
+                icon: "error"
+            });
+        }
+    }
+
+    /*
     const addStore = useFormik({
         initialValues: {
             name: String(''),
@@ -88,6 +114,7 @@ export const Stores = () => {
             }
         }
     })
+    */
     /*try {
 
 
@@ -223,47 +250,47 @@ export const Stores = () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form  >
+                            
                                 <input type="text"
-                                    value={addStore.values.name}
+                                    value={newStoreName}
                                     class="form-control"
                                     placeholder="Nombre de la Tienda"
                                     id="name"
                                     required
-                                    onChange={addStore.handleChange}
+                                    onChange={ (event) => setNewStoreName(event.target.value) }
                                 />
                                 <input
                                     type="text"
-                                    value={addStore.values.industry}
+                                    value={newStoreIndustry}
                                     class="form-control"
                                     placeholder="Forma de Ventas"
                                     id="industry"
                                     required
-                                    onChange={addStore.handleChange}
+                                    onChange={ (event) => setNewStoreIndustry(event.target.value) }
                                 />
                                 <input
                                     type="text"
-                                    value={addStore.values.served_area}
+                                    value={newStoreServedArea}
                                     class="form-control"
                                     placeholder="Localidad"
                                     id="served_area"
                                     required
-                                    onChange={addStore.handleChange}
+                                    onChange={ (event) => setNewServedArea(event.target.value) }
                                 />
                                 <input
                                     type="text"
-                                    value={addStore.values.img}
+                                    value={newStoreIMG}
                                     class="form-control"
                                     placeholder='URL Imagen'
                                     id="img"
                                     required
-                                    onChange={addStore.handleChange}
+                                    onChange={ (event) => setNewStoreIMG(event.target.value) }
                                 />
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Agregar Tienda</button>
+                                    <button type="button" class="btn btn-primary" onClick={() => {addStore()}}>Agregar Tienda</button>
                                 </div>
-                            </form>
+                            
                         </div>
 
                     </div>
