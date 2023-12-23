@@ -54,8 +54,42 @@ export const StoresClient = () => {
         getProducts();
     }, []);
 
+    let gridOptions;
+    {
+        products.map((product) => {
+            gridOptions = {
+                rowData: [
+                    {
+                        producto: product.productName,
+                        disponibilidad: product.availability,
+                        categoria: product.category,
+                        precio: product.productValue,
+                    },
+                ],
+                colmunDefs: [
+                    { field: "categoria", type: "editable" },
+                    { field: "producto", type: "editable" },
+                    { field: "disponibilidad", type: "editableNum" },
+                    { field: "precio", type: "editableNum" },
+
+                ],
+                columnTypes: {
+                    editable: {
+                        editable: true,
+                    },
+                    editableNum: {
+                        editable: true,
+                        valueParser: "Number(newValue)",
+                        filter: "agNumberColumnFilter",
+                    },
+                },
+            };
+
+        })
+    }
 
     //Add Products to Shopping Cart
+
 
 
     return (
@@ -74,7 +108,7 @@ export const StoresClient = () => {
                                     <a className="nav-link" href="/buyer/stores" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
                                 </li>
                                 <li className="nav-item" style={{ paddingLeft: 20 }}>
-                                    <a className="nav-link" href="/buyer/stores_buy" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
+                                    <a className="nav-link" href="/buyer/user_orders" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
                                 </li>
                                 <li className="nav-item" style={{ paddingLeft: 20 }}>
                                     <a className="nav-link" href='/buyer/my_profile'>Mi Perfil</a>
@@ -93,18 +127,18 @@ export const StoresClient = () => {
             </div>
 
             {/* DISPLAY STORES */}
-            <div style={{display:'block'}}>
+            <div style={{ display: 'block' }}>
                 {stores.map((store, index) => {
                     return (
                         <div
                             key={index}
                             className="card text-black mb-3"
                             style={{
-                                width:'15%',
+                                width: '15%',
                                 margin: "10px 45px",
                                 backgroundColor: "#D5D8DC",
                                 fontFamily: "sans-serif",
-                                display:'inline-block'
+                                display: 'inline-block'
                             }}
                         >
                             <div className="card-header">
@@ -161,47 +195,15 @@ export const StoresClient = () => {
                             ></button>
                         </div>
                         <div class="modal-body">
-                            {products.map((product) => {
-                                const gridOptions = {
-                                    rowData: [
-                                        {
-                                            producto: product.productName,
-                                            disponibilidad: product.availability,
-                                            categoria: product.category,
-                                            precio: product.productValue,
-                                        },
-                                    ],
-                                    colmunDefs: [
-                                        { field: "categoria", type: "editable" },
-                                        { field: "producto", type: "editable" },
-                                        { field: "disponibilidad", type: "editableNum" },
-                                        { field: "precio", type: "editableNum" },
-
-                                    ],
-                                    columnTypes: {
-                                        editable: {
-                                            editable: true,
-                                        },
-                                        editableNum: {
-                                            editable: true,
-                                            valueParser: "Number(newValue)",
-                                            filter: "agNumberColumnFilter",
-                                        },
-                                    },
-                                };
-
-                                return (<div
-                                    className={"ag-theme-quartz-dark"}
-                                    style={{ width: "100%", height: "250px" }}
-                                >
-                                    <AgGridReact
-                                        rowData={gridOptions.rowData}
-                                        columnDefs={gridOptions.colmunDefs}
-                                    />
-                                </div>)
-
-                            })}
-
+                            <div
+                                className={"ag-theme-quartz-dark"}
+                                style={{ width: "100%", height: "250px" }}
+                            >
+                                <AgGridReact
+                                    rowData={gridOptions.rowData}
+                                    columnDefs={gridOptions.colmunDefs}
+                                />
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button

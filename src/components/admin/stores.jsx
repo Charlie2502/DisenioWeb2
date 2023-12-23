@@ -11,7 +11,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase-config";
-import Stores_Manage from "./stores_manage";
 import { Firestore } from "firebase/firestore";
 
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
