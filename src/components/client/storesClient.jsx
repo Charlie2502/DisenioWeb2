@@ -27,11 +27,18 @@ export const StoresClient = () => {
     // Display Hooks
     const [stores, setStores] = useState([]);
     const [storeName, setStoreName] = useState("");
-    const [products, setProducts] = useState([]);
+    const [rowData, setRowData] = useState([]);
 
     //Collections
     const productsCollectionRef = collection(db, "Store_Catalog");
     const storesCollectionRef = collection(db, "Store");
+
+    const colmunDefs = [
+        { field: "category" },
+        { field: "productName" },
+        { field: "availability" },
+        { field: "productValue" },
+    ];
 
     /* METHODS */
     /* Show Stores */
@@ -48,45 +55,19 @@ export const StoresClient = () => {
     useEffect(() => {
         const getProducts = async () => {
             const data = await getDocs(productsCollectionRef);
-            setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        };
+            const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setRowData(rowData);
 
+            const rowIndex = 5; // Change this to the desired row index
+            const fieldName = storeName; // Change this to the desired field name
+
+            const specificValue = rowData[rowIndex] ? rowData[rowIndex][fieldName] : null;
+
+            console.log(`Value at row ${rowIndex}, ${fieldName}: ${specificValue}`);
+
+        };
         getProducts();
     }, []);
-
-    let gridOptions;
-    {
-        products.map((product) => {
-            gridOptions = {
-                rowData: [
-                    {
-                        producto: product.productName,
-                        disponibilidad: product.availability,
-                        categoria: product.category,
-                        precio: product.productValue,
-                    },
-                ],
-                colmunDefs: [
-                    { field: "categoria", type: "editable" },
-                    { field: "producto", type: "editable" },
-                    { field: "disponibilidad", type: "editableNum" },
-                    { field: "precio", type: "editableNum" },
-
-                ],
-                columnTypes: {
-                    editable: {
-                        editable: true,
-                    },
-                    editableNum: {
-                        editable: true,
-                        valueParser: "Number(newValue)",
-                        filter: "agNumberColumnFilter",
-                    },
-                },
-            };
-
-        })
-    }
 
     //Add Products to Shopping Cart
 
@@ -158,7 +139,7 @@ export const StoresClient = () => {
 
                                 <button
                                     type="button"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#manageModal"
                                     onClick={() => {
@@ -176,46 +157,46 @@ export const StoresClient = () => {
 
             {/* Store Catalog Modal */}
             <div
-                class="modal fade"
+                className="modal fade"
                 id="manageModal"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
                                 {storeName}
                             </h5>
                             <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div
                                 className={"ag-theme-quartz-dark"}
                                 style={{ width: "100%", height: "250px" }}
                             >
                                 <AgGridReact
-                                    rowData={gridOptions.rowData}
-                                    columnDefs={gridOptions.colmunDefs}
+                                    rowData={rowData}
+                                    columnDefs={colmunDefs}
                                 />
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-secondary"
+                                className="btn btn-secondary"
                                 data-bs-dismiss="modal"
                             >
                                 Close
                             </button>
                             <button
                                 type="button"
-                                class="btn btn-primary"
+                                className="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#addProdModal"
                             >
