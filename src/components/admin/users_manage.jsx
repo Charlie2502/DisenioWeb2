@@ -8,8 +8,6 @@ export const Users_Manage = () => {
   const [users, setUsers] = useState([]);
   const [rowData, setRowData] = useState([]);
 
-  const [buttonPressed, setButtonPressed] = useState(false);
-
   const usersCollectionRef = collection(db, "Users");
 
   //Table Definitions
@@ -24,13 +22,13 @@ export const Users_Manage = () => {
 
   /* Show Users */
   useEffect(() => {
-    const getProducts = async () => {
+    const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
       const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setRowData(rowData);
 
     };
-    getProducts();
+    getUsers();
   }, []);
 
   /* Modify Users */

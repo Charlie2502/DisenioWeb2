@@ -8,19 +8,34 @@ export const Billing = () => {
 
     //HOOKS
     const [billing, setBilling] = useState([]);
+    const [rowData, setRowData] = useState([]);
+
+    //Table Definitions
+    const colmunDefs = [
+        { field: "id" },
+        { field: "UserID" },
+        { field: "StoreID" },
+        { field: "Sales_Desc" },
+        { field: "TotalValue" },
+        { field: "Shipment_Date" },
+        { field: "Shipment_Type" },
+        { field: "Created_At" },
+
+    ]
 
     //Collections
     const billingCollectionRef = collection(db, "Sales");
 
-    /* Show Products */
+    /* Show Bills */
     useEffect(() => {
-        const getBillings = async () => {
-            const data = await getDocs(billingCollectionRef);
-            setBilling(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const getBills = async () => {
+          const data = await getDocs(billingCollectionRef);
+          const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          setRowData(rowData);
+    
         };
-
-        getBillings();
-    }, []);
+        getBills();
+      }, []);
 
     // Billing Table Definitions
     let gridOptions = {};
@@ -41,20 +56,10 @@ export const Billing = () => {
                         FechaCreada: bills.Created_At
                     },
                 ],
-                colmunDefs: [
-                    { field: "IDVenta", type: "editable" },
-                    { field: "IDUsuario", type: "editable" },
-                    { field: "IDTienda", type: "editableNum" },
-                    { field: "Descripcion", type: "editableNum" },
-                    { field: "ValorTotal", type: "editableNum" },
-                    { field: "FechaEnvio", type: "editableNum" },
-                    { field: "TipoEnvio", type: "editableNum" },
-                    { field: "FechaCreada", type: "editableNum" },
 
-                ],
             };
 
-            
+
         })
     }
 
@@ -93,15 +98,13 @@ export const Billing = () => {
 
             <div
                 className={"ag-theme-quartz-dark"}
-                style={{ width: "86%", height: "250px", margin: "auto" }}
+                style={{ width: "65%", height: "250px", margin: 'auto' }}
             >
                 <AgGridReact
-                    rowData={gridOptions.rowData}
-                    columnDefs={gridOptions.colmunDefs}
+                    rowData={rowData}
+                    columnDefs={colmunDefs}
                 />
             </div>
-
-            <div></div>
 
             {/* FOOTER */}
             <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a' }}>
