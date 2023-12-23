@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBFooter, MDBContainer } from 'mdb-react-ui-kit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { db } from '../../config/firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
+import { AgGridReact } from 'ag-grid-react';
 
-export const user_Orders = () => {
+export const User_Orders = () => {
 
-    return(
+    const [rowData, setRowData] = useState([]);
+
+    const usersCollectionRef = collection(db, "Users");
+
+    //Table Definitions
+    const colmunDefs = [
+        { field: "id" },
+        { field: "UserID" },
+        { field: "StoreID" },
+        { field: "Sales_Desc" },
+        { field: "TotalValue" },
+        { field: "Shipment_Date" },
+        { field: "Shipment_Type" },
+        { field: "Created_At" },
+
+    ]
+
+    /* Show User Bills */
+    useEffect(() => {
+        const getUserBills = async () => {
+            const data = await getDocs(usersCollectionRef);
+            const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setRowData(rowData);
+
+        };
+        getUserBills();
+    }, []);
+
+    const displayRowsWithSpecificValue = (fieldName, targetValue) => {
+        return rowData.filter((row) => row[fieldName] === targetValue);
+    };
+
+    const filteredRows = displayRowsWithSpecificValue('Users', 'placeholder');
+
+    return (
         <>
             {/* NAVBAR */}
             <div style={{ paddingBottom: '60px' }}>
@@ -38,49 +75,36 @@ export const user_Orders = () => {
                     </div>
                 </nav>
             </div>
-    
-        
-            {/* Tabla de mis pedidos */}
-        <h3>Mis Pedidos:</h3>
 
-            <div>
-                <table className="table table-hover" id="prod_table">
-                    <thead>
-                        <tr>
-                            
-                            <th scope="col">Tienda</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Descripcion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="table-active">
-                            <td>Column content</td>
-                            <td>Column content</td>
-                            <td>Column content</td>
-                            <td>Column content</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            {/* Tabla de mis pedidos */}
+
+            <div
+                className={"ag-theme-quartz-dark"}
+                style={{ width: "75%", height: "250px", margin:'auto' }}
+            >
+                <AgGridReact
+                    rowData={filteredRows}
+                    columnDefs={colmunDefs}
+                />
             </div>
 
             {/* FOOTER */}
-            <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right:0, bottom:0 }}>
+            <MDBFooter className='text-center text-white' style={{ backgroundColor: '#21081a', position: 'absolute', left: 0, right: 0, bottom: 0 }}>
                 <MDBContainer className='p-4'></MDBContainer>
                 <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                     © 2023 Copyright:
                     <a className='text-white' href='https://habbo.com/'>
-                    Larry.com
-                    </a>      
+                        Larry.com
+                    </a>
                 </div>
             </MDBFooter>
-         
 
-    </>
-  )
+
+        </>
+    )
 
 
 }
 
-export default user_Orders;
+export default User_Orders;
