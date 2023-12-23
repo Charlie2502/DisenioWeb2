@@ -18,13 +18,13 @@ export const user_Orders = () => {
                         <div className="collapse navbar-collapse" id="navbarColor02">
                             <ul className="navbar-nav me-auto">
                             <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href="/StoresClient" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
+                                <a className="nav-link" href='/buyer/stores' role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
                             </li>
                             <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href="/user_Orders" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
+                                <a className="nav-link" href="/buyer/orders_client" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
                             </li>
                             <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href="/profileBuyer">Mi Perfil</a>
+                                <a className="nav-link" href='/buyer/my_profile'>Mi Perfil</a>
                             </li>
                             </ul>
                             <ul>

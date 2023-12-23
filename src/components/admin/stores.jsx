@@ -171,17 +171,18 @@ export const Stores = () => {
       </div>
 
       {/* DISPLAY STORES */}
-      <div>
+      <div style={{display:'block'}}>
         {stores.map((store, index) => {
           return (
             <div
               key={index}
               className="card text-black mb-3"
               style={{
-                maxWidth: "20rem",
-                margin: "30px 45px",
+                width: '15%',
+                margin: "10px 45px",
                 backgroundColor: "#D5D8DC",
                 fontFamily: "sans-serif",
+                display: 'inline-block'
               }}
             >
               <div className="card-header">
@@ -210,7 +211,6 @@ export const Stores = () => {
                   Administrar
                 </button>
 
-                {/* <button className="btn btn-info" type="button" onClick={() => {manage(store.name)}}>Administrar</button> */}
               </div>
             </div>
           );
@@ -291,20 +291,18 @@ export const Stores = () => {
                   },
                 };
 
-                if (storeName === product.storeName) {
-                  return (
-                    <div
-                      className={"ag-theme-quartz-dark"}
-                      style={{ width: "100%", height: "250px" }}
-                    >
-                      <AgGridReact
-                        rowData={gridOptions.rowData}
-                        columnDefs={gridOptions.colmunDefs}
-                      />
-                    </div>
-                  );
-                }
+                return (<div
+                  className={"ag-theme-quartz-dark"}
+                  style={{ width: "100%", height: "250px" }}
+                >
+                  <AgGridReact
+                    rowData={gridOptions.rowData}
+                    columnDefs={gridOptions.colmunDefs}
+                  />
+                </div>)
+
               })}
+
             </div>
             <div class="modal-footer">
               <button
@@ -488,10 +486,6 @@ export const Stores = () => {
         className="text-center text-white"
         style={{
           backgroundColor: "#21081a",
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
         }}
       >
         <MDBContainer className="p-4"></MDBContainer>

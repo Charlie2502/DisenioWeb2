@@ -8,7 +8,6 @@ import { Users_Manage } from './components/admin/users_manage';
 import Billing from './components/admin/billing';
 
 import StoresClient from './components/client/storesClient';
-import {} from './components/client/profileBuyer';
 import user_Orders from './components/client/user_Orders';
 import profileBuyer from './components/client/profileBuyer';
 
@@ -28,7 +27,7 @@ function App() {
                 <Route path='/admin/billing_admin' element={<Billing />}/>
                 <Route path='/payment_form' element={<PaymentForm />}/>
                 <Route path='/buyer/stores' element={<StoresClient />}/>
-                <Route path='/buyer/stores_buy' element={<Billing />}/>
+                <Route path='/buyer/orders_client' element={<user_Orders/>}/>
                 <Route path='/buyer/my_profile' element={<profileBuyer />}/>
             </Routes>
         </div>
