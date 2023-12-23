@@ -6,17 +6,31 @@ import { AgGridReact } from "ag-grid-react";
 
 export const Users_Manage = () => {
   const [users, setUsers] = useState([]);
+  const [rowData, setRowData] = useState([]);
+
+  const [buttonPressed, setButtonPressed] = useState(false);
 
   const usersCollectionRef = collection(db, "Users");
 
+  //Table Definitions
+  const colmunDefs = [
+    { field: "id" },
+    { field: "cellphone" },
+    { field: "email" },
+    { field: "name" },
+    { field: "rol" },
+    { field: "created_at" },
+  ]
+
   /* Show Users */
   useEffect(() => {
-    const getUsers = async () => {
+    const getProducts = async () => {
       const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+      const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setRowData(rowData);
 
-    getUsers();
+    };
+    getProducts();
   }, []);
 
   /* Modify Users */
@@ -96,56 +110,15 @@ export const Users_Manage = () => {
       </div>
 
       <div>
-        {users.map((user) => {
-          const gridOptions = {
-            rowData: [
-              {
-                ID: user.id,
-                Nombre: user.name,
-                Email: user.email,
-                Telefono: user.cellphone,
-              },
-            ],
-            colmunDefs: [
-              { field: "ID", type: "editable" },
-              { field: "Nombre", type: "editable" },
-              { field: "Email", type: "editable" },
-              { field: "Telefono", type: "editableNum" },
-              {
-                field: "acciones",
-                cellRenderer: btnCellRenderer,
-                cellRendererParams: {
-                  clicked: function () {
-                    const deleteUserDocRef = doc(db, "Users", user.id);
-                    deleteDoc(deleteUserDocRef);
-                  },
-                },
-              },
-            ],
-            columnTypes: {
-              editable: {
-                editable: true,
-              },
-              editableNum: {
-                editable: true,
-                valueParser: "Number(newValue)",
-                filter: "agNumberColumnFilter",
-              },
-            },
-          };
-
-          return (
-            <div
-              className={"ag-theme-quartz-dark"}
-              style={{ width: "75%", height: "350px", margin: "auto"}}
-            >
-              <AgGridReact
-                rowData={gridOptions.rowData}
-                columnDefs={gridOptions.colmunDefs}
-              />
-            </div>
-          );
-        })}
+        <div
+          className={"ag-theme-quartz-dark"}
+          style={{ width: "65%", height: "250px", margin: 'auto' }}
+        >
+          <AgGridReact
+            rowData={rowData}
+            columnDefs={colmunDefs}
+          />
+        </div>
       </div>
     </>
   );
