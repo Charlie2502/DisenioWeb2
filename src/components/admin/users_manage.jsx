@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebase-config";
+import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { auth, db } from "../../config/firebase-config";
 import btnCellRenderer from "./btnCellRenderer";
 import { AgGridReact } from "ag-grid-react";
+import Swal from "sweetalert2";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export const Users_Manage = () => {
   const [users, setUsers] = useState([]);
   const [rowData, setRowData] = useState([]);
+
+  const [registroEmail, setRegistroCorreo] = useState('');
+  const [registroPass, setRegistroCon] = useState('');
+  const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState(0);
+  const [newRol, setNewRol] = useState('');
 
   const usersCollectionRef = collection(db, "Users");
 
@@ -30,6 +38,24 @@ export const Users_Manage = () => {
     };
     getUsers();
   }, []);
+
+  // Add Users
+  const registro = async () => {
+    try {
+      await addDoc(usersCollectionRef, { name: newName, cellphone: Number(newPhone), email: registroEmail, rol: newRol })
+      const user = await createUserWithEmailAndPassword(auth, registroEmail, registroPass);
+      Swal.fire({
+        title: "Usuario Creado!",
+        icon: "success"
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Algo salio mal",
+        text: error.message,
+        icon: "error"
+      });
+    }
+  }
 
   /* Modify Users */
 
@@ -102,6 +128,8 @@ export const Users_Manage = () => {
           type="button"
           class="btn btn-outline-secondary"
           style={{ marginLeft: "20px" }}
+          data-bs-toggle="modal"
+          data-bs-target="#addUserModal"
         >
           Añadir Usuario
         </button>
@@ -116,6 +144,96 @@ export const Users_Manage = () => {
             rowData={rowData}
             columnDefs={colmunDefs}
           />
+        </div>
+      </div>
+
+      {/* Add User Modal */}
+      <div
+        class="modal fade"
+        id="addUserModal"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        onSubmit={registro.handleSubmit}
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Datos de la Tienda
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                value={newName}
+                class="form-control"
+                placeholder="Nombre"
+                id="name"
+                required
+                onChange={(event) => setNewName(event.target.value)}
+              />
+              <input
+                type="text"
+                value={registroEmail}
+                class="form-control"
+                placeholder="Correo"
+                id="industry"
+                required
+                onChange={(event) => setRegistroCorreo(event.target.value)}
+              />
+              <input
+                type="text"
+                value={newPhone}
+                class="form-control"
+                placeholder="Telefono"
+                id="served_area"
+                required
+                onChange={(event) => setNewPhone(event.target.value)}
+              />
+              <input
+                type="text"
+                value={newRol}
+                class="form-control"
+                placeholder="Rol"
+                id="img"
+                required
+                onChange={(event) => setNewRol(event.target.value)}
+              />
+              <input
+                type="password"
+                value={registroPass}
+                class="form-control"
+                placeholder="Contraseña"
+                id="img"
+                required
+                onChange={(event) => setRegistroCon(event.target.value)}
+              />
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cerrar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={() => {
+                    registro();
+                  }}
+                >
+                  Agregar Usuario
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

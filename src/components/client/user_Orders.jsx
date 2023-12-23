@@ -10,6 +10,8 @@ export const User_Orders = () => {
 
     const [rowData, setRowData] = useState([]);
 
+    const [LSCorreo, setLSCorreo] = useState([]);
+
     const usersCollectionRef = collection(db, "Users");
 
     //Table Definitions
@@ -24,6 +26,14 @@ export const User_Orders = () => {
         { field: "Created_At" },
 
     ]
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('LSCorreo'));
+        if (user) {
+            setLSCorreo(user);
+        }
+        console.log(LSCorreo);
+    }, [])
 
     /* Show User Bills */
     useEffect(() => {
@@ -81,7 +91,7 @@ export const User_Orders = () => {
 
             <div
                 className={"ag-theme-quartz-dark"}
-                style={{ width: "75%", height: "250px", margin:'auto' }}
+                style={{ width: "75%", height: "250px", margin: 'auto' }}
             >
                 <AgGridReact
                     rowData={filteredRows}

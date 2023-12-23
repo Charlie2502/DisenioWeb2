@@ -48,11 +48,35 @@ export const Stores = () => {
   const storesCollectionRef = collection(db, "Store");
 
   //Table Definitions
+  const deleteRow = async (rowId) => {
+    try {
+      const deleteDocRef = doc(db, 'Store_Catalog', rowId);
+      await deleteDoc(deleteDocRef);
+
+      // Update the ag-Grid by removing the deleted row
+      const updatedRows = rowData.filter((row) => row.id !== rowId);
+      setRowData(updatedRows);
+    } catch (error) {
+      console.error('Error deleting row:', error);
+    }
+  };
+
   const colmunDefs = [
     { field: "category" },
     { field: "productName" },
     { field: "availability" },
-    { field: "productValue" },
+    {
+      field: 'acciones',
+      cellRenderer: btnCellRenderer,
+      cellRendererParams: {
+        clicked: function() {
+          const deleteDocRef = doc(db, 'Store_Catalog')
+          deleteDoc(deleteDocRef);
+          toast("Producto Eliminado");
+        },
+      },
+      
+    }
   ]
 
   /* METHODS */

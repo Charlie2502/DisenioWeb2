@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { auth } from '../config/firebase-config';
@@ -11,6 +11,9 @@ export const Login = ({isShowLogin}) => {
     /* HOOKS */
     const [ISCorreo, setISCorreo] = useState('');
     const [ISPass, setISPass] = useState('');
+
+    //Local Storage
+    const [LSCorreo, setLSCorreo] = useState([]);
 
     const [user, setUser] = useState({});
 
@@ -37,6 +40,10 @@ export const Login = ({isShowLogin}) => {
             });
         }
     }
+
+    useEffect(() => {
+        localStorage.setItem('LSCorreo', JSON.stringify(LSCorreo));
+    }, [LSCorreo])
 
 
     return (

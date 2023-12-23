@@ -10,7 +10,7 @@ export default class btnCellRenderer extends Component {
       }
       render() {
         return (
-          <button class="btn btn-danger" onClick={this.btnClickedHandler}>Eliminar</button>
+          <button className="btn btn-danger" style={{margin: 'auto'}} onClick={this.btnClickedHandler}>Eliminar</button>
         )
       }
 }
