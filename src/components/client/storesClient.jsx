@@ -29,10 +29,12 @@ export const StoresClient = () => {
     const [storeName, setStoreName] = useState("");
     const [rowData, setRowData] = useState([]);
 
+    const [buttonPressed, setButtonPressed] = useState(false);
     //Collections
     const productsCollectionRef = collection(db, "Store_Catalog");
     const storesCollectionRef = collection(db, "Store");
 
+    // Table Definitions
     const colmunDefs = [
         { field: "category" },
         { field: "productName" },
@@ -58,16 +60,27 @@ export const StoresClient = () => {
             const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             setRowData(rowData);
 
-            const rowIndex = 5; // Change this to the desired row index
-            const fieldName = storeName; // Change this to the desired field name
-
-            const specificValue = rowData[rowIndex] ? rowData[rowIndex][fieldName] : null;
-
-            console.log(`Value at row ${rowIndex}, ${fieldName}: ${specificValue}`);
-
         };
-        getProducts();
-    }, []);
+
+        if (buttonPressed) {
+            getProducts();
+            setButtonPressed(false); // Reset the buttonPressed state after fetching data
+        }
+
+    }, [buttonPressed]);
+
+    const displayRowsWithSpecificValue = (fieldName, targetValue) => {
+        return rowData.filter((row) => row[fieldName] === targetValue);
+      };
+    
+    const filteredRows = displayRowsWithSpecificValue('storeName', storeName);
+
+
+    const handleButtonClick = (name) => {
+        // Modify the state when the button is clicked
+        setStoreName(name);
+        setButtonPressed(true);
+    };
 
     //Add Products to Shopping Cart
 
@@ -143,7 +156,7 @@ export const StoresClient = () => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#manageModal"
                                     onClick={() => {
-                                        setStoreName(store.name);
+                                        handleButtonClick(store.name);
                                     }}
                                 >
                                     Comprar
@@ -181,27 +194,13 @@ export const StoresClient = () => {
                                 style={{ width: "100%", height: "250px" }}
                             >
                                 <AgGridReact
-                                    rowData={rowData}
+                                    rowData={filteredRows}
                                     columnDefs={colmunDefs}
                                 />
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#addProdModal"
-                            >
-                                Agregar Producto
-                            </button>
+
                         </div>
                     </div>
                 </div>

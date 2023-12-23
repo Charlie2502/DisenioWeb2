@@ -27,6 +27,9 @@ export const Stores = () => {
   const [stores, setStores] = useState([]);
   const [storeName, setStoreName] = useState("");
   const [products, setProducts] = useState([]);
+  const [rowData, setRowData] = useState([]);
+
+  const [buttonPressed, setButtonPressed] = useState(false);
 
   // Add Store Hooks
   const [newStoreName, setNewStoreName] = useState("");
@@ -44,6 +47,14 @@ export const Stores = () => {
   const productsCollectionRef = collection(db, "Store_Catalog");
   const storesCollectionRef = collection(db, "Store");
 
+  //Table Definitions
+  const colmunDefs = [
+    { field: "category" },
+    { field: "productName" },
+    { field: "availability" },
+    { field: "productValue" },
+  ]
+
   /* METHODS */
   /* Show Stores */
   useEffect(() => {
@@ -59,11 +70,31 @@ export const Stores = () => {
   useEffect(() => {
     const getProducts = async () => {
       const data = await getDocs(productsCollectionRef);
-      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const rowData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setRowData(rowData);
+
     };
 
-    getProducts();
-  }, []);
+    if (buttonPressed) {
+      getProducts();
+      setButtonPressed(false); // Reset the buttonPressed state after fetching data
+    }
+
+  }, [buttonPressed]);
+
+  const displayRowsWithSpecificValue = (fieldName, targetValue) => {
+    return rowData.filter((row) => row[fieldName] === targetValue);
+  };
+
+  const filteredRows = displayRowsWithSpecificValue('storeName', storeName);
+
+
+  const handleButtonClick = (name) => {
+    // Modify the state when the button is clicked
+    setStoreName(name);
+    setButtonPressed(true);
+  };
+
 
   /* Add Stores */
 
@@ -170,7 +201,7 @@ export const Stores = () => {
       </div>
 
       {/* DISPLAY STORES */}
-      <div style={{display:'block'}}>
+      <div style={{ display: 'block' }}>
         {stores.map((store, index) => {
           return (
             <div
@@ -204,7 +235,7 @@ export const Stores = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#manageModal"
                   onClick={() => {
-                    setStoreName(store.name);
+                    handleButtonClick(store.name);
                   }}
                 >
                   Administrar
@@ -247,61 +278,15 @@ export const Stores = () => {
               ></button>
             </div>
             <div class="modal-body">
-              {products.map((product) => {
-                const gridOptions = {
-                  rowData: [
-                    {
-                      producto: product.productName,
-                      disponibilidad: product.availability,
-                      categoria: product.category,
-                      precio: product.productValue,
-                    },
-                  ],
-                  colmunDefs: [
-                    { field: "categoria", type: "editable" },
-                    { field: "producto", type: "editable" },
-                    { field: "disponibilidad", type: "editableNum" },
-                    { field: "precio", type: "editableNum" },
-                    {
-                      field: "acciones",
-                      cellRenderer: btnCellRenderer,
-                      cellRendererParams: {
-                        clicked: function () {
-                          const deleteDocRef = doc(
-                            db,
-                            "Store_Catalog",
-                            product.id
-                          );
-                          deleteDoc(deleteDocRef);
-                          toast("Producto Eliminado");
-                        },
-                      },
-                    },
-                  ],
-                  columnTypes: {
-                    editable: {
-                      editable: true,
-                    },
-                    editableNum: {
-                      editable: true,
-                      valueParser: "Number(newValue)",
-                      filter: "agNumberColumnFilter",
-                    },
-                  },
-                };
-
-                return (<div
-                  className={"ag-theme-quartz-dark"}
-                  style={{ width: "100%", height: "250px" }}
-                >
-                  <AgGridReact
-                    rowData={gridOptions.rowData}
-                    columnDefs={gridOptions.colmunDefs}
-                  />
-                </div>)
-
-              })}
-
+              <div
+                className={"ag-theme-quartz-dark"}
+                style={{ width: "100%", height: "250px" }}
+              >
+                <AgGridReact
+                  rowData={filteredRows}
+                  columnDefs={colmunDefs}
+                />
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -466,7 +451,7 @@ export const Stores = () => {
                   addProducts();
                 }}
               >
-                Agregar Tienda
+                Agregar Producto
               </button>
               <button
                 type="button"
