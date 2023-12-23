@@ -37,31 +37,6 @@ export const Billing = () => {
         getBills();
     }, []);
 
-    // Billing Table Definitions
-    let gridOptions = {};
-    {
-        billing.map((bills) => {
-            // Billing Table Definitions
-            console.log(bills.id);
-            gridOptions = {
-                rowData: [
-                    {
-                        IDVenta: bills.id,
-                        IDUsuario: bills.UserID,
-                        IDTienda: bills.StoreID,
-                        Descripcion: bills.Sales_Desc,
-                        ValorTotal: bills.TotalValue,
-                        FechaEnvio: bills.Shipment_Date,
-                        TipoEnvio: bills.Shipment_Type,
-                        FechaCreada: bills.Created_At
-                    },
-                ],
-
-            };
-
-
-        })
-    }
 
     return (
         <>

@@ -8,35 +8,36 @@ export const user_Orders = () => {
     return(
         <>
             {/* NAVBAR */}
-            <div style={{paddingBottom: '60px'}}>
+            <div style={{ paddingBottom: '60px' }}>
                 <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-                    <div className="container-fluid" style={{padding:10}}>
-                    <a className="navbar-brand" style={{paddingLeft:20}} href="/StoresClient">Larry</a>
+                    <div className="container-fluid" style={{ padding: 10 }}>
+                        <a className="navbar-brand" style={{ paddingLeft: 20 }} href="">Larry</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarColor02">
                             <ul className="navbar-nav me-auto">
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href='/buyer/stores' role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
-                            </li>
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href="/buyer/orders_client" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
-                            </li>
-                            <li className="nav-item" style={{paddingLeft:20}}>
-                                <a className="nav-link" href='/buyer/my_profile'>Mi Perfil</a>
-                            </li>
+                                <li className="nav-item" style={{ paddingLeft: 20 }}>
+                                    <a className="nav-link" href="/buyer/stores" role="button" aria-haspopup="true" aria-expanded="false">Tiendas</a>
+                                </li>
+                                <li className="nav-item" style={{ paddingLeft: 20 }}>
+                                    <a className="nav-link" href="/buyer/user_orders" role="button" aria-haspopup="true" aria-expanded="false">Mis Pedidos</a>
+                                </li>
+                                <li className="nav-item" style={{ paddingLeft: 20 }}>
+                                    <a className="nav-link" href='/buyer/my_profile'>Mi Perfil</a>
+                                </li>
                             </ul>
                             <ul>
-                    <li className="nav-item" style={{ paddingRight: 20 }}>
-                      <a className="nav-link" href="/shoppingCart">
-                        <FontAwesomeIcon icon={faShoppingCart} size="lg" />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
+                                <li className="nav-item" style={{ paddingRight: 20 }}>
+                                    <a className="nav-link" href="/users_manage">
+                                        <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
     
         
             {/* Tabla de mis pedidos */}
@@ -74,7 +75,7 @@ export const user_Orders = () => {
                     </a>      
                 </div>
             </MDBFooter>
-        </div>  
+         
 
     </>
   )

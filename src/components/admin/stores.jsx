@@ -194,6 +194,18 @@ export const Stores = () => {
                     Usuarios
                   </a>
                 </li>
+                <li>
+                  <div style={{ marginLeft: "1245px" }}>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addStoreModal"
+                    >
+                      Agregar Tienda
+                    </button>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -245,16 +257,6 @@ export const Stores = () => {
             </div>
           );
         })}
-        <div style={{ marginLeft: "45px" }}>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#addStoreModal"
-          >
-            Agregar Tienda
-          </button>
-        </div>
       </div>
 
       {/* Store Catalog Modal */}
